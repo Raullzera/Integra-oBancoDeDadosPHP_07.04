@@ -60,6 +60,25 @@ class Usuario{
         $stmt -> execute();
         return $stmt->fetchAll();
     }
+
+    public function alterarUsuarios($id, $nome, $email, $senha){
+        $sql = "UPDATE usuario SET nome = :n, email = :e, senha = :s WHERE id = :i";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":n", $nome);
+        $stmt->bindValue(":e", $email);
+        $stmt->bindValue(":s", $senha);
+        $stmt->bindValue(":i", $id);
+
+        return $stmt->execute();
+    }
+
+    public function localizarUsuario($id){
+        $sql = "SELECT * FROM usuario WHERE id = :i";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":i", $id);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 }
 
 ?>
