@@ -3,12 +3,18 @@
 require "Usuario.class.php";
 $usuario = new Usuario();
 
-if(iiset($_GET['id'])){
+$usuario->conecta();
+
+if(isset($_GET['id'])){
     $id = $_GET['id'];
 } else{
     echo "ID não informado. Impossivel editar o usuario";
     exit();
 }
+
+$dados = $usuario->localizarUsuario($id);
+
+?>
 
 <!DOCTYPE html>
 <head>
@@ -17,13 +23,39 @@ if(iiset($_GET['id'])){
     <title>Alteração de Usuario</title>
 </head>
 <body>
-<h2>Cadastro de Usuario</h2>
-    <form action="editar_submit.php" method ="post">
-        <input type="text"     name = "nome"    placeholder = "Informe seu nome">  <br>
-        <input type="text"     name = "email"   placeholder = "Informe o email">   <br>
-        <input type="password" name = "senha"   placeholder = "Informe sua senha"> <br>
-        <input type="submit"   name=  "botao"   value="Cadastrar">
-    </form> 
+<h2>Editar o Usuario</h2>
+   <form action="editar_submit.php" method="post">
+
+    
+    <input type="hidden" name="id" value="<?php echo $dados['id']; ?>">
+
+    <input 
+        type="text"
+        name="nome"
+        value="<?php echo $dados['nome']; ?>"
+        placeholder="Informe seu nome"
+    >
+    <br>
+
+    <input 
+        type="text"
+        name="email"
+        value="<?php echo $dados['email']; ?>"
+        placeholder="Informe o email"
+    >
+    <br>
+
+    <input 
+        type="password"
+        name="senha"
+        value="<?php echo $dados['senha']; ?>"
+        placeholder="Informe sua senha"
+    >
+    <br>
+
+    <input type="submit" value="Alterar">
+
+</form>
     
 </body>
 </html>
